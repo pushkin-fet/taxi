@@ -1,0 +1,92 @@
+.modal-auth-window{
+    display: flex;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 999;
+  
+    background-color: rgba(0, 0, 0, 0.2);
+    justify-content: center;
+    align-items: center;
+    
+  }
+  .authorization{
+    border-radius: 18px;
+    position: absolute;
+    min-width: 300px;
+    max-width: 500px;
+    left: 50%; 
+    top: 50%;
+    background-color: #FFA91B;
+    border: 1px solid lightgray;
+    transform: translateX(-50%) translateY(-50%);
+    min-height: 300px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+  }
+  .form-label{
+    border-bottom: 2px solid black;
+    margin-bottom: 20px;
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    background-color: aliceblue;
+  }
+
+
+.auth{
+  margin-top: 15px;
+  padding: 8px;
+  border-radius: 12px;
+}
+.header-auth,.header-reg{
+  width: 100%;
+  background-color: inherit;
+  height: 50px;
+}
+.header-auth{
+  border-right: 2px solid black;
+}
+.sub-authorization, .registration{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+.auth-label,.reg-label{
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 24px;
+  color:white;
+  font-weight: 700;
+}
+.password,.login,.useremail{
+  width: 80%;
+  height: 40px;
+  padding: 3px 5px;
+  font-size: 20px;
+  margin-bottom: 20px;
+}
+.auth, .reg{
+  padding: 8px 10px;
+  font-size: 20px;
+  border-radius: 12px;
+  margin-bottom: 10px;
+}
+.isActiveBtn{
+  background-color: #EC4138;
+  color: aliceblue;
+}
+.errorMessage{
+  padding: 10px 8px;
+  background-color: #EC4138;
+  border-radius: 14px;
+  color: white;
+  text-align: center;
+  font-size: 16px;
+  margin-bottom: 10px;
+}
