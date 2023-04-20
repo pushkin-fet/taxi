@@ -7,7 +7,7 @@ class UserController {
             const {login, email, password } = req.body
             console.log(login, email, password)
             if (login.length < 4 || email.length < 9 || password.length < 6) {
-                return res.status(401).json({message:"Валидация не пройдена"})
+                return res.status(401).end()
             }
 
             const searchPerson = await db.query('SELECT login FROM clients WHERE login = ($1)', [email])
@@ -16,7 +16,7 @@ class UserController {
            
 
             if(searchPerson.rows.length == 1){
-                return res.status(400).json({message:'Пользователь с таким email уже существует!'})
+                return res.status(400).end()
             }
             const hashPassword = bcrypt.hashSync(password, 2);
             const hashLogin = bcrypt.hashSync(login, 5)
@@ -37,7 +37,7 @@ class UserController {
             if(user.rows[0]){
                 res.status(200).json(user.rows[0])
             } else {
-                res.status(403).json({message:"Пользователя с такой почтой не существует"})
+                res.status(403).end()
             }
             
         } catch (error){

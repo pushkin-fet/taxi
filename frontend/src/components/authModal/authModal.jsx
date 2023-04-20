@@ -1,8 +1,12 @@
-import { useState } from 'react'
+import {useContext, useState} from 'react'
 import { registrateUser, authUser } from './../../service/Authorization'
 import './style.css'
+import {Context} from "../../App.jsx";
+
 
 export const AuthModal = ({ onClose }) => {
+    const {isAuth, setIsAuth} = useContext(Context)
+    console.log(isAuth)
     const [registrationWindow, setRegistrationWindow] = useState(true)
 
     const [login, setLogin] = useState("")
@@ -14,12 +18,12 @@ export const AuthModal = ({ onClose }) => {
     async function onAuthorization() {
         if (registrationWindow) {
             const response = await registrateUser(email, login, password)
-            .then((res) => setError(""))
+            .then((res) => {setError(""); setIsAuth(true); onClose()   })
             .catch(() => setError("Произошла ошибка"))
             console.log(response)
         } else {
             const response = await authUser(email, password)
-            .then((res) => setError(""))
+            .then((res) => {setError(""); setIsAuth(true); onClose()})
             .catch(() => setError("Произошла ошибка"))
             console.log(response)
         }

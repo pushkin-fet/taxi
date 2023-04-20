@@ -30,7 +30,7 @@ export const Header = () => {
                 </ul>
             </nav>
            <AuthButton/>
-            <div className="one">111</div>
+
         </header>
     )
 }

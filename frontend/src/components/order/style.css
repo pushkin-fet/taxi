@@ -1,0 +1,25 @@
+.order-form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: #FFA91B;
+    padding: 10px;
+    max-width: 500px;
+    width: 90%;
+}
+.order-form-title{
+    color: white;
+    font-weight: 800;
+ }
+
+.order-user-name, .order-adress-from, .order-adress-to, .order-user-phone{
+    width: 90%;
+    padding: 3px 5px;
+    margin: 15px 0;
+
+}
+.send-order{
+    font-size: 16pt;
+    padding: 4px 7px;
+    border-radius: 8px;
+}

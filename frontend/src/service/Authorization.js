@@ -1,12 +1,12 @@
 
 export async function authUser(email, password) {
-    const response = await fetch('http://localhost:5000/api/auth', {
+    const response = await fetch('http://localhost:5000/api/auth/user', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({ email, password })
-    }).then(async (res) => { console.log(res); return await res.json() })
+    }).then(async (res) => {  return await res.json() })
     return response
 }
 
@@ -17,6 +17,6 @@ export async function registrateUser(email, login, password) {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({ email, login, password })
-    }).then((res) => { console.log(res); return res })
+    }).then( async (res) => {  return await res.json() })
     return response
 }
