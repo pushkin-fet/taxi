@@ -1,6 +1,6 @@
 
 export async function authUser(email, password) {
-    const response = await fetch('http://localhost:5000/api/auth/user', {
+    const response = await fetch('http://localhost:5000/api/authorization', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -11,7 +11,7 @@ export async function authUser(email, password) {
 }
 
 export async function registrateUser(email, login, password) {
-    const response = await fetch('http://localhost:5000/api/auth', {
+    const response = await fetch('http://localhost:5000/api/registration', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'

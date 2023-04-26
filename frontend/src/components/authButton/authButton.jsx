@@ -1,9 +1,10 @@
-import {useState} from 'react'
+import {useContext, useState} from 'react'
 import { AuthModal } from '../authModal/authModal'
+import {Context} from "../../App.jsx";
 
 export const AuthButton = () => {
     const [isVisibleModal, setVisibleModal] = useState(false)
-
+    const {isAuth} = useContext(Context)
     function openModal(){
         setVisibleModal(true)
     }
@@ -16,11 +17,11 @@ export const AuthButton = () => {
         return(
             <>
                 <AuthModal onClose={closeModal}/>
-                <button className="is-auth">Войти</button>
+                <button className="is-auth">{isAuth ? 'Выйти' : 'Войти'}</button>
             </>
         )
     }
     return(
-        <button onClick={openModal} className="is-auth">Войти</button>
+        <button onClick={openModal} className="is-auth">{isAuth ? 'Выйти' : 'Войти'}</button>
     )
 }

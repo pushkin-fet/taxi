@@ -5,6 +5,7 @@ import { AuthButton } from '../authButton/authButton'
 export const Header = () => {
     return (
         <header className="header">
+
             <img src={logo} alt="" className="logo" />
             <nav className='header_nav'>
                 <ul className='header_ul'>
@@ -28,6 +29,7 @@ export const Header = () => {
                     </li>
                     <li className='header_li'><a href="#0">Contact</a></li>
                 </ul>
+
             </nav>
            <AuthButton/>
 

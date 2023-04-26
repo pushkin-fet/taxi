@@ -1,5 +1,6 @@
 const db = require('./../db')
 const bcrypt = require('bcryptjs')
+const uuid = require('uuid').v4
 class UserController {
 
     async createUser(req, res){
@@ -7,25 +8,33 @@ class UserController {
             const {login, email, password } = req.body
             console.log(login, email, password)
             if (login.length < 4 || email.length < 9 || password.length < 6) {
-                return res.status(401).end()
+                return res.sendStatus(401)
             }
 
+            //  Ищем клиента по емейлу в БД при регмстрации. Проверка на уникальность, есть ли такой пользователь
             const searchPerson = await db.query('SELECT login FROM clients WHERE login = ($1)', [email])
 
-            console.log(searchPerson)
            
-
-            if(searchPerson.rows.length == 1){
-                return res.status(400).end()
+            // Если такие пользователи с данным емейлом УЖЕ есть, то ошибка 401
+            if(searchPerson.rows.length > 0){
+                return res.sendStatus(401)
             }
             const hashPassword = bcrypt.hashSync(password, 2);
-            const hashLogin = bcrypt.hashSync(login, 5)
+            // const hashLogin = bcrypt.hashSync(login, 5)
             const newPerson = await db.query('INSERT INTO clients (email, login, password) VALUES ($1, $2, $3) RETURNING *', [email, login, hashPassword])
+
+            const userFK = newPerson.rows[0].id
+            console.log(userFK)
+            let session_id = uuid()
+
+            const newSession = await db.query('INSERT INTO sessions (session_id, user_fk) VALUES ($1, $2)', [session_id, userFK] )
+            // res.setHeader('Set-Cookie', `session=${session_id}`)
+            res.set('Set-Cookie', `session=${session_id}`)
             res.status(201).json(newPerson.rows[0])
 
         } catch (error){
 
-            res.status(400).json({error:error})
+            return res.sendStatus(401)
         }
 
     }
@@ -37,11 +46,11 @@ class UserController {
             if(user.rows[0]){
                 res.status(200).json(user.rows[0])
             } else {
-                res.status(403).end()
+                return res.sendStatus(403)
             }
             
         } catch (error){
-            res.status(400).json({error:error})
+            return res.sendStatus(401)
         }
 
     }
@@ -55,15 +64,12 @@ class UserController {
 
             // Сравниваем захешированный пароль с введеном в запросе
             const validPassword = bcrypt.compareSync(password, user.password)
-            if(!validPassword) return res.status(401).json({message:"Неправильный логин или пароль"})
+            if(!validPassword) return res.sendStatus(401)
             else res.status(200).json(user)
         }
         catch (e){
             console.log(e)
-            res.status(401).json({
-                body:req.body,
-                error:'incorrect password'
-            })
+            return res.sendStatus(401)
         }
     }
 
@@ -78,10 +84,10 @@ class UserController {
                 return res.status(201).json({message:"Success"})
             }
             else{
-                return res.status(401).json({message:"Не авторизованы"})
+                return  res.sendStatus(401)
             }
         } catch(e) {
-            res.status(500).json({message:e})
+            return res.sendStatus(500)
         }
     }
 
@@ -96,10 +102,10 @@ class UserController {
                 return res.status(201).json({message:"Success"})
             }
             else{
-                return res.status(401).json({message:"Не авторизованы"})
+                return res.sendStatus(401)
             }
         } catch(e) {
-            res.status(500).json({message:e})
+            return res.sendStatus(500)
         }
     }
 
@@ -110,7 +116,7 @@ async testMessage(request, response){
         console.log(first)
         response.status(200).json({testmessage:"Работает!"})
     } catch{
-        return response.status(500).json({errormessage:"ОШИБКА"})
+        return res.sendStatus(500)
     }
 }
 

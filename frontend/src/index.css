@@ -46,3 +46,20 @@ body {
     font-family: "Lexend Exa", sans-serif;
     width: 100%;
   }
+
+.main-pic{
+	margin: 10%;
+	border-radius: 10%;
+
+
+}
+
+button {
+	color: #fff; /* цвет текста */
+	text-decoration: none; /* убирать подчёркивание у ссылок */
+	user-select: none; /* убирать выделение текста */
+	background: rgb(212,75,56); /* фон кнопки */
+	padding: .7em 1.5em; /* отступ от текста */
+	outline: none; /* убирать контур в Mozilla */
+
+}
