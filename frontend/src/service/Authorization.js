@@ -1,22 +1,36 @@
+import axios from "axios";
 
 export async function authUser(email, password) {
-    const response = await fetch('http://localhost:5000/api/authorization', {
+    const response = await axios('http://localhost:5000/authorization', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ email, password })
-    }).then(async (res) => {  return await res.json() })
+        withCredentials: true,
+        data: JSON.stringify({ email, password })
+    }).then( (res) => {  return  res.data })
     return response
 }
 
 export async function registrateUser(email, login, password) {
-    const response = await fetch('http://localhost:5000/api/registration', {
+    const response = await axios('http://localhost:5000/registration', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ email, login, password })
-    }).then( async (res) => {  return await res.json() })
+        withCredentials: true,
+        data: JSON.stringify({ email, login, password })
+    }).then(  (res) => {  return  res.data })
+    return response
+}
+
+export async function authWithCookie(){
+    const response = await axios('http://localhost:5000/authCookie', {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        withCredentials: true
+    }).then((res) =>{ return res.data} )
     return response
 }

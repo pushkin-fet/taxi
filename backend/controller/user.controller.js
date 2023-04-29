@@ -28,9 +28,15 @@ class UserController {
             let session_id = uuid()
 
             const newSession = await db.query('INSERT INTO sessions (session_id, user_fk) VALUES ($1, $2)', [session_id, userFK] )
-            // res.setHeader('Set-Cookie', `session=${session_id}`)
-            res.set('Set-Cookie', `session=${session_id}`)
-            res.status(201).json(newPerson.rows[0])
+            res
+                .status(201)
+                .setHeader('Set-Cookie', `session=${session_id}`, {
+                    sameSite: 'strict',
+                    path: '/',
+                    expires: new Date(new Date().getTime() + 300 * 1000),
+                    httpOnly: false,
+                } )
+                .json(newPerson.rows[0]);
 
         } catch (error){
 
@@ -110,15 +116,29 @@ class UserController {
     }
 
 
-async testMessage(request, response){
-    try{
-        const{first} = request.params
-        console.log(first)
-        response.status(200).json({testmessage:"Работает!"})
-    } catch{
-        return res.sendStatus(500)
+    async authWithCookie(req, res){
+        try {
+            const cookies = req.headers.cookie.split('; ')
+            const session_cookie = cookies.find((elem) => elem.includes('session='))
+            if(!session_cookie){
+                res.status(403).json('Вы Не авторизованы')
+            }
+            const response = await db.query('SELECT user_fk FROM sessions WHERE session_id = $1', [session_cookie.split('=')[1]])
+            if(response.rows.length === 0){
+                res.status(403).json('Вы Не авторизованы')
+            }
+            const user = await db.query('SELECT * FROM clients WHERE id = $1', [response.rows[0].user_fk])
+            if (user.rows.length === 0){
+                res.status(403).json('Вы Не авторизованы')
+            }
+            console.log(user.rows[0])
+            res.status(200).json(user.rows[0])
+
+        }
+        catch{
+            res.status(500).json('НЕ Успешно')
+        }
     }
-}
 
 }
 

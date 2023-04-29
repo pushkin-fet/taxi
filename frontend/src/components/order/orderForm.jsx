@@ -1,15 +1,17 @@
 import   './style.css';
 import {useState} from "react";
+import {createOrder} from "../../service/order.js";
 export const OrderForm = () => {
     const [userName, setUserName] = useState('')
     const [adressFrom, setAdressFrom] = useState('')
     const [adressTo, setAdressTo] = useState('')
     const [userPhone, setUserPhone] = useState('')
-    function sendOrder(){
-        console.log(userName)
-        console.log(adressFrom)
-        console.log(adressTo)
-        console.log(userPhone)
+    async function sendOrder(){
+        const response = await createOrder(userName, adressFrom, adressTo, userPhone)
+            .then((res) =>{
+                console.log(res)})
+            .catch((error) =>{
+                console.log(error)})
     }
 
     return (
