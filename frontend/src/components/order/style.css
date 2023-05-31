@@ -6,7 +6,7 @@
     padding: 10px;
     max-width: 500px;
     width: 90%;
-    /*margin: 300px 30%;*/
+    margin: 15% auto ;
 }
 .order-form-title{
     color: white;
@@ -23,4 +23,23 @@
     font-size: 16pt;
     padding: 4px 7px;
     border-radius: 8px;
+}
+
+.order-item-container{
+    width: 30%;
+    min-width: 270px;
+    padding: 10px;
+    border-radius: 6px;
+    background-color: #fff;
+    margin: 12px;
+    display: flex;
+    flex-direction: column;
+    -webkit-box-shadow: 0px 0px 8px 8px rgba(34, 60, 80, 0.2);
+    -moz-box-shadow: 0px 0px 8px 8px rgba(34, 60, 80, 0.2);
+    box-shadow: 0px 0px 8px 8px rgba(34, 60, 80, 0.2);
+}
+.order-item-fio, .order-item-adressfrom, .order-item-adressto, .order-item-phone{
+    font-size: 15px;
+    font-weight: 500;
+
 }

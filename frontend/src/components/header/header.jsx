@@ -1,35 +1,24 @@
 import './style.css'
 import logo from './../../assets/logo2.jpg'
 import { AuthButton } from '../authButton/authButton'
+import {useNavigate} from "react-router-dom";
 
 export const Header = () => {
+    const  navigate = useNavigate()
+    function goOrder(){navigate('/order') }
+    function goOrderList(){navigate('/orders-list') }
+
+    function goHome(){navigate('/') }
+
     return (
         <header className="header">
 
-            <img src={logo} alt="" className="logo" />
+            <img src={logo} alt="" className="logo" onClick={goHome} />
             <nav className='header_nav'>
-                <ul className='header_ul'>
-                    <li className='header_li'><a href="#0">Home</a></li>
-                    <li className='header_li'><a href="#0">About</a></li>
-                    <li className='header_li'>
-                        <a href="#0">Clients</a>
-                        <ul className='header_ul'>
-                            <li className='header_li'><a href="#0">Burger King</a></li>
-                            <li className='header_li'><a href="#0">Southwest Airlines</a></li>
-                            <li className='header_li'><a href="#0">Levi Strauss</a></li>
-                        </ul>
-                    </li>
-                    <li className='header_li'>
-                        <a href="#0">Services</a>
-                        <ul className='header_ul'>
-                            <li className='header_li'><a href="#0">Print Design</a></li>
-                            <li className='header_li'><a href="#0">Web Design</a></li>
-                            <li className='header_li'><a href="#0">Mobile App Development</a></li>
-                        </ul>
-                    </li>
-                    <li className='header_li'><a href="#0">Contact</a></li>
-                </ul>
 
+                <button className={'header-button'} onClick={goOrderList}>Список заказов</button>
+
+                <button className={'header-button'} onClick={goOrder}>Заказать</button>
             </nav>
            <AuthButton/>
 

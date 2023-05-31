@@ -4,6 +4,7 @@ import {OrderForm} from "../components/order/orderForm.jsx";
 import {OrderPage} from "../pages/orderPage/orderPage.jsx";
 import {useContext} from "react";
 import {Context} from "../App.jsx";
+import {OrderList} from "../pages/order-list/orders.jsx";
 
 
 export const publicRoutes = createBrowserRouter([
@@ -11,6 +12,12 @@ export const publicRoutes = createBrowserRouter([
         path: '/',
         element: <MainPage/>,
     },
+
+    {
+        path: '/orders-list',
+        element: <OrderList/>
+    },
+
     {
         path: '*',
         element: <MainPage/>
@@ -21,6 +28,10 @@ export const privateRoutes = createBrowserRouter([
     {
         path: '/',
         element: <MainPage/>,
+    },
+    {
+        path: '/orders-list',
+        element: <OrderList/>
     },
     {
         path: '/order',

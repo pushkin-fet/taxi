@@ -20,12 +20,24 @@ class OrderController {
             }
             // const user = await db.query('SELECT id FROM clients WHERE email = $1', [email]);
             const newOrder = await db.query('INSERT INTO orders (fio, adress_from, adress_to, phone, user_fk) VALUES ($1, $2, $3, $4, $5) RETURNING *', [fio, adressFrom, adressTo, phone, user_fk])
-            res.status(201).json(newPerson.rows[0])
+            res.status(201).json(newOrder.rows[0])
 
         } catch (error) {
-            console.log('наша ошибка')
+            console.log(error)
             return res.sendStatus(401)
         }
+
+    }
+
+    async getAllOrders(req, res){
+        try{
+            const response = await db.query('SELECT * FROM orders')
+            res.status(200).json(response.rows)
+        }
+        catch{
+            res.sendStatus(500)
+        }
+
 
     }
 

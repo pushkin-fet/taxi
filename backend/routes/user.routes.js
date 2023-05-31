@@ -6,8 +6,7 @@ router.get('/user/:id', userController.getUser)
 router.post('/registration', userController.createUser)
 router.post('/authorization', userController.authUser)
 router.get('/authCookie', userController.authWithCookie)
-router.put('/user', userController.updateUserName)
-router.delete('/user', userController.deleteUser)
+router.get('/clear-cookie', userController.deleteSession)
 
 
 module.exports = router

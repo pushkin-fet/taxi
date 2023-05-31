@@ -34,3 +34,14 @@ export async function authWithCookie(){
     }).then((res) =>{ return res.data} )
     return response
 }
+
+export async function userExit(){
+    const response = axios('http://localhost:5000/clear-cookie', {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        withCredentials: true
+    }).then((res) =>{ return res.data} )
+    return response
+}

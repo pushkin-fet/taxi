@@ -79,38 +79,55 @@ class UserController {
         }
     }
 
-    async updateUserName(req, res){
-        const {login, password, username} = req.body
-        try{
-            const hashLogin = bcrypt.hashSync(login, 5);
-            const hashPassword = bcrypt.hashSync(password, 5)
-            let person = await db.query('SELECT email FROM clients WHERE login = ($1) AND password = ($2)', [hashLogin, hashPassword])
-            if(person.rows.length === 1){
-                let newUsername = await db.query('UPDATE clients SET login = ($1) WHERE login = $(2)', [username, hashLogin])
-                return res.status(201).json({message:"Success"})
-            }
-            else{
-                return  res.sendStatus(401)
-            }
-        } catch(e) {
-            return res.sendStatus(500)
-        }
-    }
+    // async updateUserName(req, res){
+    //     const {login, password, username} = req.body
+    //     try{
+    //         const hashLogin = bcrypt.hashSync(login, 5);
+    //         const hashPassword = bcrypt.hashSync(password, 5)
+    //         let person = await db.query('SELECT email FROM clients WHERE login = ($1) AND password = ($2)', [hashLogin, hashPassword])
+    //         if(person.rows.length === 1){
+    //             let newUsername = await db.query('UPDATE clients SET login = ($1) WHERE login = $(2)', [username, hashLogin])
+    //             return res.status(201).json({message:"Success"})
+    //         }
+    //         else{
+    //             return  res.sendStatus(401)
+    //         }
+    //     } catch(e) {
+    //         return res.sendStatus(500)
+    //     }
+    // }
+    //
+    // async deleteUser(req, res) {
+    //     try{
+    //     const {login, password} = req.body
+    //     const hashLogin = bcrypt.hashSync(login, 5);
+    //         const hashPassword = bcrypt.hashSync(password, 5)
+    //         let person = await db.query('SELECT username FROM users WHERE login = ($1) AND password = ($2)', [hashLogin, hashPassword])
+    //         if(person.rows.length === 1){
+    //             await db.query('DELETE FROM users WHERE login = ($1) WHERE login = $(2)', [hashLogin, hashPassword])
+    //             return res.status(201).json({message:"Success"})
+    //         }
+    //         else{
+    //             return res.sendStatus(401)
+    //         }
+    //     } catch(e) {
+    //         return res.sendStatus(500)
+    //     }
+    // }
 
-    async deleteUser(req, res) {
+    async deleteSession(req, res) {
         try{
-        const {login, password} = req.body
-        const hashLogin = bcrypt.hashSync(login, 5);
-            const hashPassword = bcrypt.hashSync(password, 5)
-            let person = await db.query('SELECT username FROM users WHERE login = ($1) AND password = ($2)', [hashLogin, hashPassword])
-            if(person.rows.length === 1){
-                await db.query('DELETE FROM users WHERE login = ($1) WHERE login = $(2)', [hashLogin, hashPassword])
-                return res.status(201).json({message:"Success"})
-            }
-            else{
-                return res.sendStatus(401)
-            }
+
+        const cookies = req.headers.cookie.split('; ')
+        const sessionCookie = cookies.find((elem) =>{ return elem.includes('session=')})
+        if(!sessionCookie){
+            res.sendStatus(200)
+        }
+            console.log(sessionCookie)
+        const response = await db.query('DELETE FROM sessions WHERE session_id=$1', [sessionCookie.split('=')[1]])
+        res.clearCookie('session').sendStatus(200)
         } catch(e) {
+            console.log(e)
             return res.sendStatus(500)
         }
     }

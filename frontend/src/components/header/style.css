@@ -7,15 +7,18 @@
     align-items: center;
 }
 
+.header_nav{
+  display: flex;
+  /*margin: 0 25px;*/
+  gap: 20px;
+  /*position: relative;*/
+  /*right: 20px;*/
+}
+
 .logo{
     width: 150px;
+    cursor: pointer;
 }
-  
-.header_nav {
-    display: flex;
-    border: 2px solid #EBECF1;
-    border-radius: 30px;
-  }
   
 .header_ul {
     position: relative;
@@ -108,5 +111,13 @@
     display: block;
     /* margin: 20px auto; */
     font: normal 17px arial;
+  }
+
+  .header-button{
+    background-color: #e0433b;
+    color: white;
+    font-size: 16px;
+    padding: 6px 10px;
+
   }
 
